@@ -17,7 +17,7 @@ public class EmployerController {
 	@RequestMapping(value= "/employer/dashboard" , method = RequestMethod.GET)
 	public String loadEmployerPage() {
 		
-		return "/employer/homepage2";
+		return "/employer/homepageEmployer";
 	}
 
 }

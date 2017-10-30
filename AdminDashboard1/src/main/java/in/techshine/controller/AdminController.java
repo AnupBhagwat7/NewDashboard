@@ -17,7 +17,7 @@ public class AdminController {
 	@RequestMapping(value= "/admin/dashboard" , method = RequestMethod.GET)
 	public String loadAdminPage() {
 		
-		return "/admin/homepage1";
+		return "/admin/homepageAdmin";
 	}
 
 }

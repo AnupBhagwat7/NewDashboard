@@ -3,6 +3,8 @@
  */
 package in.techshine.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,10 +16,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import in.techshine.beans.User;
+import in.techshine.service.MailService;
 import in.techshine.service.SecurityService;
 import in.techshine.service.UserService;
 import in.techshine.validator.UserValidator;
@@ -36,6 +41,9 @@ public class MainController {
 
 	@Autowired
 	private UserValidator userValidator;
+	
+	@Autowired
+	private MailService mailService; 
 
 	private static final Logger logger = Logger.getLogger(MainController.class); 
 	
@@ -64,7 +72,7 @@ public class MainController {
 		securityService.autologin(userForm.getUsername(), userForm.getPasswordConfirm());
 
 		logger.debug(" registration is successful . Redirecting to homepage. ");
-		return "redirect:homepage";
+		return "redirect:/user/homepage";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -99,5 +107,27 @@ public class MainController {
 		
 		logger.debug("Loading dashboard page");
 		return "/user/homepage";
+	}
+		
+	@RequestMapping(value="/forgotPassword", method = RequestMethod.GET)
+	public String forgotPassword()
+	{
+		return "forgotPassword"; 
+	}
+	
+	@RequestMapping(value="/resetPassword" , method=RequestMethod.POST)
+	public String resetRequest(@RequestParam(value="email") String email)
+	{
+		//check if the email id is valid and registered with us.
+		mailService.sendMail(email);
+		return "checkMail";
+	}
+	
+	@RequestMapping(value="/newPassword/{email}" )
+	public String resetPassword(@PathVariable String email,Map<String,String> model)
+	{
+		//check if the email id is valid and registered with us.
+		model.put("emailid", email);
+		return "newPassword";
 	}
 }

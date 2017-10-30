@@ -16,6 +16,10 @@ import javax.persistence.*;
 public class User {
     private Long id;
     private String username;
+    private String email;
+    private String mobileNo;
+    private String dob;
+    private String gender;
     private String password;
     private String passwordConfirm;
     private Set<Role> roles;
@@ -64,4 +68,39 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getMobileNo() {
+		return mobileNo;
+	}
+
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
+	}
+
+	public String getDob() {
+		return dob;
+	}
+
+	public void setDob(String dob) {
+		this.dob = dob;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+    
+    
+    
 }
